@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mixers", "mixers", "{98BAD375-4E77-4EDA-86CA-E77F213DCDA6}"
 EndProject
@@ -17,6 +17,18 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Particles", "Particles.vcxproj", "{96F220F8-DF7E-49AB-9E51-394676061B00}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomThumbnail", "CustomThumbnail.vcxproj", "{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EzRadialCloner", "EzRadialCloner.vcxproj", "{C8E9900D-6296-4B2A-915B-1C5B9EFF3D70}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Redness", "Redness.vcxproj", "{26A0BECF-A620-46A1-83E7-80E1F9254C27}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vignette", "Vignette.vcxproj", "{BB1F5563-CF71-48C4-9F0E-1AE67C4DC96C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PixelSort", "PixelSort.vcxproj", "{4029ACE3-CB90-4C82-A878-4582D204D1F4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bloom", "Bloom.vcxproj", "{829A758E-2A42-43FE-9220-55ED2DCF340E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameOfLife", "GameOfLife.vcxproj", "{5A533C75-7C71-4587-843F-D67570131039}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +56,30 @@ Global
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Debug|x64.Build.0 = Debug|x64
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Release|x64.ActiveCfg = Release|x64
 		{01FC8291-A59A-4D36-9F2A-31E1D5998BD0}.Release|x64.Build.0 = Release|x64
+		{C8E9900D-6296-4B2A-915B-1C5B9EFF3D70}.Debug|x64.ActiveCfg = Debug|x64
+		{C8E9900D-6296-4B2A-915B-1C5B9EFF3D70}.Debug|x64.Build.0 = Debug|x64
+		{C8E9900D-6296-4B2A-915B-1C5B9EFF3D70}.Release|x64.ActiveCfg = Release|x64
+		{C8E9900D-6296-4B2A-915B-1C5B9EFF3D70}.Release|x64.Build.0 = Release|x64
+		{26A0BECF-A620-46A1-83E7-80E1F9254C27}.Debug|x64.ActiveCfg = Debug|x64
+		{26A0BECF-A620-46A1-83E7-80E1F9254C27}.Debug|x64.Build.0 = Debug|x64
+		{26A0BECF-A620-46A1-83E7-80E1F9254C27}.Release|x64.ActiveCfg = Release|x64
+		{26A0BECF-A620-46A1-83E7-80E1F9254C27}.Release|x64.Build.0 = Release|x64
+		{BB1F5563-CF71-48C4-9F0E-1AE67C4DC96C}.Debug|x64.ActiveCfg = Debug|x64
+		{BB1F5563-CF71-48C4-9F0E-1AE67C4DC96C}.Debug|x64.Build.0 = Debug|x64
+		{BB1F5563-CF71-48C4-9F0E-1AE67C4DC96C}.Release|x64.ActiveCfg = Release|x64
+		{BB1F5563-CF71-48C4-9F0E-1AE67C4DC96C}.Release|x64.Build.0 = Release|x64
+		{4029ACE3-CB90-4C82-A878-4582D204D1F4}.Debug|x64.ActiveCfg = Debug|x64
+		{4029ACE3-CB90-4C82-A878-4582D204D1F4}.Debug|x64.Build.0 = Debug|x64
+		{4029ACE3-CB90-4C82-A878-4582D204D1F4}.Release|x64.ActiveCfg = Release|x64
+		{4029ACE3-CB90-4C82-A878-4582D204D1F4}.Release|x64.Build.0 = Release|x64
+		{829A758E-2A42-43FE-9220-55ED2DCF340E}.Debug|x64.ActiveCfg = Debug|x64
+		{829A758E-2A42-43FE-9220-55ED2DCF340E}.Debug|x64.Build.0 = Debug|x64
+		{829A758E-2A42-43FE-9220-55ED2DCF340E}.Release|x64.ActiveCfg = Release|x64
+		{829A758E-2A42-43FE-9220-55ED2DCF340E}.Release|x64.Build.0 = Release|x64
+		{5A533C75-7C71-4587-843F-D67570131039}.Debug|x64.ActiveCfg = Debug|x64
+		{5A533C75-7C71-4587-843F-D67570131039}.Debug|x64.Build.0 = Debug|x64
+		{5A533C75-7C71-4587-843F-D67570131039}.Release|x64.ActiveCfg = Release|x64
+		{5A533C75-7C71-4587-843F-D67570131039}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
