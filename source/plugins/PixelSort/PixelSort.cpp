@@ -29,6 +29,7 @@ static const char _fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D InputTexture;
 uniform vec2 Resolution;
 uniform bool DoGol;
+uniform int Frame;
 in vec2 uv;
 uniform vec2 MaxUV;
 out vec4 fragColor;
@@ -38,7 +39,7 @@ void main()
 	vec4 color = texture( InputTexture, st);
 	if (DoGol)
 	{
-		color.r = 255;
+		color.r = mod(Frame, 255) / 255;
 	}
 	fragColor = color;
 	
@@ -108,6 +109,7 @@ FFResult PixelSort::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 
 	if( sample->GetValue() > 0.5f )
 	{
+
 		glDeleteTextures( 0, &handle );
 
 		glGenTextures( 1, &handle );
@@ -117,9 +119,14 @@ FFResult PixelSort::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
 		glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, inputTex->HardwareWidth, inputTex->HardwareHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
 
-		delete texture;
-		texture         = new FFGLTextureStruct( *inputTex );
-		texture->Handle = handle;
+		if( !frozen )
+		{
+			frozen = true;
+			delete texture;
+			texture         = new FFGLTextureStruct( *inputTex );
+			texture->Handle = handle;
+		}
+
 
 		glCopyTexSubImage2D( GL_TEXTURE_2D,                         //target
 							 0,                                     //level
@@ -134,8 +141,10 @@ FFResult PixelSort::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 
 	if( texture )
 	{
+		shader.Set( "Frame", int(m_frame) );
 		if( sample->GetValue() < 0.5f )
 		{
+
 			Scoped2DTextureBinding textureBinding( pGL->inputTextures[ 0 ]->Handle );
 			shader.Set( "InputTexture", 0 );
 			FFGLTexCoords maxCoords = GetMaxGLTexCoords( *texture );
@@ -154,6 +163,13 @@ FFResult PixelSort::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 								 texture->HardwareWidth,//width
 								 texture->HardwareHeight//height
 			);
+			if( frozen )
+			{
+				frozen = false;
+				delete texture;
+				texture         = new FFGLTextureStruct( *inputTex );
+				texture->Handle = handle;
+			}
 		}
 		else
 		{
@@ -177,7 +193,7 @@ FFResult PixelSort::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 			);
 		}
 	}
-
+	m_frame++;
 	return FF_SUCCESS;
 }
 FFResult PixelSort::DeInitGL()

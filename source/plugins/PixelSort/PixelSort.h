@@ -21,4 +21,5 @@ private:
 	GLuint handle;
 	FFGLTextureStruct* texture;
 	bool frozen = false;
+	UINT32 m_frame = 0;
 };
