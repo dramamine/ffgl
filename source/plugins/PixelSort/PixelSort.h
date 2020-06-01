@@ -18,6 +18,7 @@ private:
 	ffglex::FFGLScreenQuad quad;//!< Utility to help us render a full screen quad.
 
 	std::shared_ptr< ffglqs::ParamEvent > sample;
+	std::shared_ptr< ffglqs::Param > th;
 	GLuint handle;
 	FFGLTextureStruct* texture;
 	bool frozen = false;
