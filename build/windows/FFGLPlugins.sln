@@ -30,6 +30,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bloom", "Bloom.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameOfLife", "GameOfLife.vcxproj", "{5A533C75-7C71-4587-843F-D67570131039}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FilmTiler", "FilmTiler.vcxproj", "{0D4171E5-A6A0-4A6E-8855-6B3D9918A571}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FilmScroller", "FilmScroller.vcxproj", "{15C16237-2D3F-466A-9500-BF795CBE9834}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WildPixelSort", "WildPixelSort.vcxproj", "{8AEC7A03-287B-43A1-BB5D-B0A38416AE59}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadialMask", "RadialMask.vcxproj", "{66222ECD-6DBB-4EBE-95DB-A53E39648A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -80,6 +88,22 @@ Global
 		{5A533C75-7C71-4587-843F-D67570131039}.Debug|x64.Build.0 = Debug|x64
 		{5A533C75-7C71-4587-843F-D67570131039}.Release|x64.ActiveCfg = Release|x64
 		{5A533C75-7C71-4587-843F-D67570131039}.Release|x64.Build.0 = Release|x64
+		{0D4171E5-A6A0-4A6E-8855-6B3D9918A571}.Debug|x64.ActiveCfg = Debug|x64
+		{0D4171E5-A6A0-4A6E-8855-6B3D9918A571}.Debug|x64.Build.0 = Debug|x64
+		{0D4171E5-A6A0-4A6E-8855-6B3D9918A571}.Release|x64.ActiveCfg = Release|x64
+		{0D4171E5-A6A0-4A6E-8855-6B3D9918A571}.Release|x64.Build.0 = Release|x64
+		{15C16237-2D3F-466A-9500-BF795CBE9834}.Debug|x64.ActiveCfg = Debug|x64
+		{15C16237-2D3F-466A-9500-BF795CBE9834}.Debug|x64.Build.0 = Debug|x64
+		{15C16237-2D3F-466A-9500-BF795CBE9834}.Release|x64.ActiveCfg = Release|x64
+		{15C16237-2D3F-466A-9500-BF795CBE9834}.Release|x64.Build.0 = Release|x64
+		{8AEC7A03-287B-43A1-BB5D-B0A38416AE59}.Debug|x64.ActiveCfg = Debug|x64
+		{8AEC7A03-287B-43A1-BB5D-B0A38416AE59}.Debug|x64.Build.0 = Debug|x64
+		{8AEC7A03-287B-43A1-BB5D-B0A38416AE59}.Release|x64.ActiveCfg = Release|x64
+		{8AEC7A03-287B-43A1-BB5D-B0A38416AE59}.Release|x64.Build.0 = Release|x64
+		{66222ECD-6DBB-4EBE-95DB-A53E39648A80}.Debug|x64.ActiveCfg = Debug|x64
+		{66222ECD-6DBB-4EBE-95DB-A53E39648A80}.Debug|x64.Build.0 = Debug|x64
+		{66222ECD-6DBB-4EBE-95DB-A53E39648A80}.Release|x64.ActiveCfg = Release|x64
+		{66222ECD-6DBB-4EBE-95DB-A53E39648A80}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
