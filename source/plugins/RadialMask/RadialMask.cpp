@@ -31,8 +31,6 @@ void main()
 
 static const char _fragmentShaderCode[] = R"(
 #version 410 core
-// iMouse.x: Starting angle
-// iMouse.y: Area - % of circle to show
 #define PI 3.14159265358979323844
 uniform sampler2D InputTexture;
 uniform float Angle;

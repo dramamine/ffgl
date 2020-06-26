@@ -3,15 +3,15 @@ using namespace ffglex;
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< PixelSort >,// Create method
-	"PXLS",                     // Plugin unique ID of maximum length 4.
-	"AA Pxlsrt",             // Plugin name
+	"DG05",                     // Plugin unique ID of maximum length 4.
+	"Slow Pixelsort",             // Plugin name
 	2,                          // API major version number
 	1,                          // API minor version number
 	1,                          // Plugin major version number
 	0,                          // Plugin minor version number
 	FF_EFFECT,                  // Plugin type
 	"Pixel sorter",             // Plugin description
-	""                          // About
+	"by domegod (marten@metal-heart.org)"                          // About
 );
 
 static const char _vertexShaderCode[] = R"(#version 410 core

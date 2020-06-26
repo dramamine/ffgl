@@ -4,15 +4,15 @@ using namespace ffglqs;
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< EzRadialCloner >,// Create method
-	"DG01",                      // Plugin unique ID of maximum length 4.
-	"ez_radial_cloner",            // Plugin name
+	"DG02",                      // Plugin unique ID of maximum length 4.
+	"EZ Radial Cloner",          // Plugin name
 	2,                           // API major version number
 	1,                           // API minor version number
 	1,                           // Plugin major version number
 	0,                           // Plugin minor version number
 	FF_EFFECT,                   // Plugin type
 	"Take a wedge and repeat it a couple times.",  // Plugin description
-	"Effects Plugin by Domegod"      // About
+	"Effects Plugin by Domegod (marten@metal-heart.org)"      // About
 );
 
 static const char _vertexShaderCode[] = R"(#version 410 core

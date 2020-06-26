@@ -19,6 +19,7 @@ private:
 
 	std::shared_ptr< ffglqs::Param > th;
 	std::shared_ptr< ffglqs::ParamRange > wildness;
+	std::shared_ptr< ffglqs::ParamBool > vert;
 	GLuint handle;
 	FFGLTextureStruct* texture;
 	bool frozen    = false;
