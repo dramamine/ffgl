@@ -4,7 +4,7 @@ using namespace ffglqs;
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< FilmTiler >,// Create method
-	"DGTS",                     // Plugin unique ID of maximum length 4.
+	"DG07",                     // Plugin unique ID of maximum length 4.
 	"Tile Scroller",            // Plugin name
 	2,                           // API major version number
 	1,                           // API minor version number

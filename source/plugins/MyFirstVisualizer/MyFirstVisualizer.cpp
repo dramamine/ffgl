@@ -1,27 +1,24 @@
-#include "RadialMask.h"
+#include "MyFirstVisualizer.h"
 using namespace ffglex;
 
 static CFFGLPluginInfo PluginInfo(
-	PluginFactory< RadialMask >,// Create method
-	"DGRM",                      // Plugin unique ID of maximum length 4.
-	"Radial Mask",            // Plugin name
+	PluginFactory< MyFirstVisualizer >,// Create method
+	"DGMF",                      // Plugin unique ID of maximum length 4.
+	"Audio Visualizer Example",  // Plugin name
 	2,                           // API major version number
 	1,                           // API minor version number
 	1,                           // Plugin major version number
 	0,                           // Plugin minor version number
 	FF_EFFECT,                   // Plugin type
-	"Mask along polar coords",  // Plugin description
-	"by domegod (marten@metal-heart.org)"      // About
+	"Looks like Milkdrop probably",  // Plugin description
+	"Resolume FFGL Example"      // About
 );
 
 static const char _vertexShaderCode[] = R"(#version 410 core
 uniform vec2 MaxUV;
-
 layout( location = 0 ) in vec4 vPosition;
 layout( location = 1 ) in vec2 vUV;
-
 out vec2 uv;
-
 void main()
 {
 	gl_Position = vPosition;
@@ -29,63 +26,45 @@ void main()
 }
 )";
 
-static const char _fragmentShaderCode[] = R"(
-#version 410 core
-#define PI 3.14159265358979323844
+static const char _fragmentShaderCode[] = R"(#version 410 core
 uniform sampler2D InputTexture;
-uniform float Angle;
-uniform float Range;
-uniform float Blackout;
-
+uniform vec3 Brightness;
+uniform float Bass1;
 in vec2 uv;
-
 out vec4 fragColor;
-
-void main() {
-  float angle = PI * (Angle - 180.) / 180.; // [ -pi, pi ]
-  float range = PI * Range; // [ 0, pi ]
-	vec2 p = uv;
-  vec2 normCoord = 2 * (uv - 0.5); // -1 to 1
-
-  float theta = atan(normCoord.y, normCoord.x);
-
-  // range
-  float shortest_diff = min(    
-    abs(angle - (theta - 2*PI)), 
-    min(
-      abs(angle - theta),
-      abs(angle - (theta + 2*PI))
-    )
-  );
-  
-  if (shortest_diff < range) {
-    fragColor = texture(InputTexture, uv);
-  } else {
-    fragColor = vec4(0,0,0,Blackout);
-  }
-
-  return;
+void main()
+{
+	vec4 color = texture( InputTexture, uv );
+	//The InputTexture contains premultiplied colors, so we need to unpremultiply first to apply our effect on straight colors.
+	if( color.a > 0.0 )
+		color.rgb /= color.a;
+	color.rgb += Brightness * 2. - 1.;
+	//The plugin has to output premultiplied colors, this is how we're premultiplying our straight color while also
+	//ensuring we aren't going out of the LDR the video engine is working in.
+	color.rgb = clamp( color.rgb * color.a, vec3( 0.0 ), vec3( color.a ) );
+	color.r = Bass1;
+	fragColor = color;
 }
-
 )";
 
-RadialMask::RadialMask()
+MyFirstVisualizer::MyFirstVisualizer()
 {
 	// Input properties
 	SetMinInputs( 1 );
-	SetMaxInputs( 1 );
+	SetMaxInputs( 4 );
 
 	//We declare that this plugin has a Brightness parameter which is a RGB param.
 	//The name here must match the one you declared in your fragment shader.
-	AddParam( angle = ffglqs::ParamRange::Create( "Angle", 0.0f, { 0, 360 } ) );
-	AddParam( range = ffglqs::Param::Create( "Range", 0.25f ) );
-	AddParam( blackout = ffglqs::ParamBool::Create( "Blackout" ) );
+	AddRGBColorParam( "Brightness" );
+	AddParam( audiofft = ffglqs::ParamFFT::Create("AudioFFT"));
+
+	Log( "Created MyFirstVisualizer effect" );
 }
-RadialMask::~RadialMask()
+MyFirstVisualizer::~MyFirstVisualizer()
 {
 }
 
-FFResult RadialMask::InitGL( const FFGLViewportStruct* vp )
+FFResult MyFirstVisualizer::InitGL( const FFGLViewportStruct* vp )
 {
 	if( !shader.Compile( _vertexShaderCode, _fragmentShaderCode ) )
 	{
@@ -101,7 +80,7 @@ FFResult RadialMask::InitGL( const FFGLViewportStruct* vp )
 	//Use base-class init as success result so that it retains the viewport.
 	return CFFGLPlugin::InitGL( vp );
 }
-FFResult RadialMask::ProcessOpenGL( ProcessOpenGLStruct* pGL )
+FFResult MyFirstVisualizer::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 {
 	if( pGL->numInputTextures < 1 )
 		return FF_FAIL;
@@ -116,15 +95,30 @@ FFResult RadialMask::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 	ScopedSamplerActivation activateSampler( 0 );
 	Scoped2DTextureBinding textureBinding( pGL->inputTextures[ 0 ]->Handle );
 
-	shader.Set( "inputTexture", 0 );
-	shader.Set( "Angle", angle->GetValue() );
-	shader.Set( "Range", range->GetValue() );
-	shader.Set( "Blackout", blackout->GetValue() );
+
+
+	shader.Set( "InputTexture", 0 );
 
 	//The input texture's dimension might change each frame and so might the content area.
 	//We're adopting the texture's maxUV using a uniform because that way we dont have to update our vertex buffer each frame.
 	FFGLTexCoords maxCoords = GetMaxGLTexCoords( *pGL->inputTextures[ 0 ] );
 	shader.Set( "MaxUV", maxCoords.s, maxCoords.t );
+
+	//Log( "param size:", this->audioParams.size() );
+	////if( this->audioParams.size() > 0 )
+	////{
+	////	float bass = this->audioParams[0].GetBass();
+	////	Log( bass );
+	////	float bass = this->audioParams.
+	////}
+	//ffglqs::Audio audio = this->audioParams[ 0 ];
+	//Log( audio.GetVolume() );
+	// shader.Set( "AudioFFT", audiofft->GetValue() );
+
+	ffglqs::Audio audio = this->audioParams[ audiofft ];
+	shader.Set( "Bass1", this->audioParams[ audiofft ].GetVolume() );
+	Log( audiofft->fftData[50] );
+
 
 	//This takes care of sending all the parameter that the plugin registered to the shader.
 	SendParams( shader );
@@ -133,10 +127,11 @@ FFResult RadialMask::ProcessOpenGL( ProcessOpenGLStruct* pGL )
 
 	return FF_SUCCESS;
 }
-FFResult RadialMask::DeInitGL()
+FFResult MyFirstVisualizer::DeInitGL()
 {
 	shader.FreeGLResources();
 	quad.Release();
 
 	return FF_SUCCESS;
 }
+

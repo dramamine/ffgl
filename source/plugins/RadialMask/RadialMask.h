@@ -18,4 +18,5 @@ private:
 	ffglex::FFGLScreenQuad quad; //!< Utility to help us render a full screen quad.
 	std::shared_ptr< ffglqs::ParamRange > angle;
 	std::shared_ptr< ffglqs::Param > range;
+	std::shared_ptr< ffglqs::ParamBool > blackout;
 };

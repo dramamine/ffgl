@@ -4,8 +4,8 @@ using namespace ffglqs;
 
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< FilmScroller >,// Create method
-	"DGFS",                    // Plugin unique ID of maximum length 4.
-	"Film Scroller",           // Plugin name
+	"DG06",                    // Plugin unique ID of maximum length 4.
+	"Filmstrip Scroller",           // Plugin name
 	2,                         // API major version number
 	1,                         // API minor version number
 	1,                         // Plugin major version number
