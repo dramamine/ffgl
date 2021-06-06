@@ -8,8 +8,8 @@ using namespace ffglex;
 
 namespace ffglqs
 {
-
-Plugin::Plugin()
+Plugin::Plugin( bool supportTopLeftTextureOrientation ) :
+	CFFGLPlugin( supportTopLeftTextureOrientation )
 {
 }
 
@@ -118,7 +118,7 @@ void Plugin::UpdateAudioAndTime()
 	for( auto entry : audioParams )
 	{
 		std::shared_ptr< ParamFFT > param = entry.first;
-		ParamInfo* fftInfo  = FindParamInfo( param->index );
+		ParamInfo* fftInfo                = FindParamInfo( param->index );
 		for( size_t index = 0; index < param->fftData.size(); ++index )
 			param->fftData[ index ] = fftInfo->elements[ index ].value;
 		audioParams[ param ].Update( param->fftData );
@@ -237,11 +237,11 @@ char* Plugin::GetTextParameter( unsigned int index )
 {
 	bool inBounds = 0 <= index && index < params.size();
 	if( !inBounds )
-		return "";
+		return (char*)FF_FAIL;
 
 	auto paramText = std::dynamic_pointer_cast< ParamText >( params[ index ] );
 	if( !paramText )
-		return "";
+		return (char*)FF_FAIL;
 
 	return const_cast< char* >( paramText->text.c_str() );
 }
@@ -272,6 +272,13 @@ void Plugin::AddParam( std::shared_ptr< ParamRange > param )
 {
 	unsigned int new_index = (unsigned int)params.size();
 	SetParamInfo( new_index, param->GetName().c_str(), param->GetType(), param->GetValue() );
+	//In FFGLPluginManager.cpp, line 274, SetParamInfo clamps the default value to 0...1 in case of FF_TYPE_STANDARD 
+	if( param->GetValue() < 0.0f || param->GetValue() > 1.0f )
+	{
+		ParamInfo* paramInfo = FindParamInfo( new_index );
+		if ( paramInfo != nullptr ) 
+			paramInfo->defaultFloatVal = param->GetValue();
+	}
 	SetParamRange( new_index, param->GetRange().min, param->GetRange().max );
 	params.push_back( param );
 }

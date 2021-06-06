@@ -61,7 +61,7 @@ public:
 
 	/// This method is called by the host to determine whether the plugin supports the SetTime function.
 	bool IsTimeSupported() const;
-	/// This methos is called by the host to determine whether or not the plugin supports top left texture orientations.
+	/// This method is called by the host to determine whether or not the plugin supports top left texture orientations.
 	/// Some hosts may use top-left texture orientations internally. By default plugins use bottom left. If the host wants
 	/// to call those plugins it first needs to flip the inputs on the y-axis, and then when the plugin has run the host needs
 	/// to flip the output as well. This takes some time, so if the plugin reports that it supports top-left orientations the
@@ -193,6 +193,8 @@ public:
 	char* GetFileParamExtension( unsigned int paramIndex, unsigned int extensionIndex ) const;
 
 	RangeStruct GetParamRange( unsigned int index );
+	std::string GetParamGroup( unsigned int dwIndex );
+	std::string GetParamDisplayName( unsigned int dwIndex );
 
 	/// Get the number of parameter events that are currently pending.
 	FFUInt32 GetNumPendingParamEvents() const;
@@ -330,8 +332,21 @@ protected:
 	///
 	/// \param paramID			Index of the parameter whose visibility has to be changed.
 	/// \param shouldBeVisible	True if the parameter should be visible in the ui, false otherwise.
-	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible );
+	/// \param raiseEvent                Whether or not this function should automatically raise a visibility change event. Stateful hosts (ie Resolume)
+	///                         require you to raise the event in order for them to pick up the visiblity change. You'd probably pass false here during
+	///                         initialization of your parameters and true when you're changing visibility on the fly.
+	void SetParamVisibility( unsigned int paramID, bool shouldBeVisible, bool raiseEvent );
 	void SetParamRange( unsigned int index, float min, float max );
+	void SetParamGroup( unsigned int dwIndex, std::string newGroupName );
+	/// Change the name that a host should show as a param's name.
+	///
+	/// \param paramID                     Index of the parameter whose display name has to be changed.
+	/// \param newDisplayName     The new name that should be displayed. If this is empty the host will revert to the original name.
+	/// \param raiseEvent              Whether or not a display name change event should be fired to make stateful hosts pick up the change.
+	///                        Probably you want to pass false during initialization and true when changing a display name while the plugin is running.
+	void SetParamDisplayName( unsigned int paramID, std::string newDisplayName, bool raiseEvent );
+
+	void SetParamElements( unsigned int dwIndex, std::vector< std::string > newElements, const std::vector< float >& elementValues, bool raiseEvent );
 
 	/// Raises an event flag on a certain parameter. Calling this will store the event as being a pending event
 	/// untill the host decides to consume the event and handles it. Raising an event multiple times before the host
@@ -352,8 +367,9 @@ protected:
 		{
 		}
 
-		unsigned int ID;
-		char Name[ 16 ];
+		unsigned int ID;        //!< The id is used to represent this parameter in communication between host and plugin.
+		std::string name;       //!< The name is shown by the host to the user to identify this plugin. It may also be used by the host for parameter serialization.
+		std::string displayName;//!< Override for the name shown by the host. Params should retain the same names for serialization, but display names can change as those aren't used for identification.
 		unsigned int dwType;
 
 		// extra parameters
@@ -375,9 +391,10 @@ protected:
 
 		float defaultFloatVal = 0.0f;
 		std::string defaultStringVal;
-		std::vector< std::string > supportedExtensions; //!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
+		std::vector< std::string > supportedExtensions;//!< The extensions this parameter supports. Only used if dwType is FF_TYPE_FILE.
 
-		FFUInt64 pendingEventFlags = 0;                 //!< Event flags for events that are pending for the current parameter.
+		FFUInt64 pendingEventFlags = 0;//!< Event flags for events that are pending for the current parameter.
+		std::string groupName;         //!< Name for the param group this param is a member of. Empty for ungrouped.
 	};
 	enum class TextureOrientation
 	{
@@ -398,9 +415,9 @@ private:
 	int m_iMinInputs;
 	int m_iMaxInputs;
 
-	bool m_timeSupported;                            //!< Whether or not this plugin supports having it's time set.
-	const bool m_topLeftTextureOrientationSupported; //!< Whether or not this plugin supports input/output textures with the top-left orientation rather than OpenGL's standard bottom-right.
-	TextureOrientation textureOrientation;  //!< The texture orientation the host/plugin have agreed to use. By default plugins use OpenGL's bottom_left standard.
+	bool m_timeSupported;                           //!< Whether or not this plugin supports having it's time set.
+	const bool m_topLeftTextureOrientationSupported;//!< Whether or not this plugin supports input/output textures with the top-left orientation rather than OpenGL's standard bottom-right.
+	TextureOrientation textureOrientation;          //!< The texture orientation the host/plugin have agreed to use. By default plugins use OpenGL's bottom_left standard.
 };
 
 #endif
