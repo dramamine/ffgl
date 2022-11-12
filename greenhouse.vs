@@ -1,7 +1,7 @@
 
 /*{
-    "CREDIT": "",
-    "DESCRIPTION": "",
+    "CREDIT": "domegod",
+    "DESCRIPTION": "Translate a triangular image to each individual triangle",
     "CATEGORIES": [ "effect" ],
     "INPUTS": [
         {
@@ -44,6 +44,7 @@ https://github.com/mrRay/ISF_Spec/
 float offset = 0.323;
 
 vec2 center = vec2(0.5, 0.5);
+vec2 corner = vec2(0,0);
 vec2 o1 = vec2(604,1024-639)/1024;
 vec2 o2 = vec2(667,1024-466)/1024;
 
@@ -67,6 +68,7 @@ vec2 tri6[3] = vec2[](o3, o7, o4);
 vec2 tri7[3] = vec2[](o7, o8, o4);
 vec2 tri8[3] = vec2[](o4, o8, o5);
 vec2 tri9[3] = vec2[](o8, o9, o5);
+vec2 outside[3] = vec2[](corner,corner,corner);
 
 
 // from stackoverflow
@@ -87,69 +89,55 @@ bool point_inside_trigon(vec2 s, vec2[3] t) {
 vec2[3] find_trigon(float r, vec2 c) {
 	if (r < length(o2-center)) {
 		if (point_inside_trigon(c, tri1)) {
-					gl_FragColor = vec4(0,1,0,1);
           return tri1;
 				}
 			else if (point_inside_trigon(c, tri3)) {
-					gl_FragColor = vec4(1,1,0,1);
           return tri3;
 				}
 		} else if (r < length(o4-center)) {
 			if (point_inside_trigon(c, tri2)) {
-					gl_FragColor = vec4(0,1,0,1);
           return tri2;
 				}
 			else if (point_inside_trigon(c, tri3)) {
-					gl_FragColor = vec4(1,1,0,1);
           return tri3;
 				}
 			else if (point_inside_trigon(c, tri4)) {
-					gl_FragColor = vec4(0,0.5,1,1);
           return tri4;
 				}
 		}  else if (r < length(o5-center)) {
 			if (point_inside_trigon(c, tri2)) {
-					gl_FragColor = vec4(0,1,0,1);
           return tri2;
 				}
 			else if (point_inside_trigon(c, tri4)) {
-					gl_FragColor = vec4(0,0.5,1,1);
           return tri4;
 				}
 			else if (point_inside_trigon(c, tri6)) {
-					gl_FragColor = vec4(1,0.5,0,1);
           return tri6;
 				}			
 			else if (point_inside_trigon(c, tri7)) {
-					gl_FragColor = vec4(0.5,0.5,0,1);
           return tri7;
 				}			
 			else if (point_inside_trigon(c, tri8)) {
-					gl_FragColor = vec4(1,0.5,0,1);
           return tri8;
 				}			
 		}  else {
 			if (point_inside_trigon(c, tri5)) {
-					gl_FragColor = vec4(0,1,0,1);
           return tri5;
 				}
 			else if (point_inside_trigon(c, tri6)) {
-					gl_FragColor = vec4(1,0.5,0,1);
           return tri6;
 				}			
 			else if (point_inside_trigon(c, tri7)) {
-					gl_FragColor = vec4(0.5,0.5,0,1);
           return tri7;
 				}			
 			else if (point_inside_trigon(c, tri8)) {
-					gl_FragColor = vec4(1,0.5,0,1);
           return tri8;
 				}		
 			else if (point_inside_trigon(c, tri9)) {
-					gl_FragColor = vec4(0.5,0.5,0,1);
           return tri9;
 				}				
 		}
+	return outside;
 }
 
 float dist(vec2 pt1, vec2 pt2, vec2 pt3)
@@ -161,50 +149,37 @@ float dist(vec2 pt1, vec2 pt2, vec2 pt3)
 }
 
 void main() {
-	gl_FragColor = vec4(isf_FragNormCoord.x, 0.0 , isf_FragNormCoord.y, 1.0);
+  // normalize relative to center
 	vec2 normCoord = isf_FragNormCoord - vec2(0.5, 0.5);
+
+  // find polar coords compared to center
 	float r = length(normCoord);
-    float theta = mod( atan(normCoord.y, normCoord.x), 2 * PI);
+  float theta = mod( atan(normCoord.y, normCoord.x), 2 * PI);
 	
+  // which of the 5 sections of the dome are we in?
 	float segment = mod( round( (theta+offset) / (.4 * PI)), 5);
-	gl_FragColor = vec4(segment / 5,0,0,1);
 	
+  // rotate to treat as one section
 	theta -= segment * (.4 * PI);
+  // calculate new coordinate - c is basically our original normCoord but
+  // all other sections have been rotated into a single section.
 	vec2 c = vec2(r * cos(theta), r * sin(theta)) + vec2(0.5, 0.5);
 
-	vec2 mytriangle[3] = find_trigon(r, c);
-	float mytriangle_height = dist(mytriangle[0], mytriangle[1], mytriangle[2]);
+  // which triangle are we in?
+	vec2 tri[3] = find_trigon(r, c);
+	if (tri[0].x == 0) {
+		gl_FragColor = vec4(0,0,0,1);
+		return;
+	}
 	
-	float normalized_y = dist(mytriangle[0], mytriangle[1], c) / mytriangle_height;
-	// gl_FragColor = vec4(normalized_y, 0, 0, 1);
+	float normalized_y = dist(tri[0], tri[1], c) / dist(tri[0], tri[1], tri[2]);
 	
 	// find the vector that's p0 -> p1 rotated 90 degrees
-	vec2 x2y2 = vec2(
-	    mytriangle[0].x - (mytriangle[1].y - mytriangle[0].y),
-	    mytriangle[0].y + (mytriangle[1].x - mytriangle[0].x)
+	vec2 p = vec2(
+	    tri[0].x - (tri[1].y - tri[0].y),
+	    tri[0].y + (tri[1].x - tri[0].x)
 	);
-	float normalized_x = dist(mytriangle[0], x2y2, c) / distance(mytriangle[0], mytriangle[1]);
-	// gl_FragColor = vec4(normalized_x, 0, 0, 1);
+	float normalized_x = dist(tri[0], p, c) / distance(tri[0], tri[1]);
+
 	gl_FragColor = IMG_NORM_PIXEL(VideoInput, vec2(normalized_x, normalized_y));
-	
-	
-}/*{
-    "CREDIT": "",
-    "DESCRIPTION": "",
-    "CATEGORIES": [ "generator" ],
-    "INPUTS": [
-        {
-			"TYPE": "float",
-            "NAME": "MR",
-            "LABEL": "Mod Red",
-            "DEFAULT": 1
-        }
-	,
-	    {
-			"TYPE": "float",
-            "NAME": "MB",
-            "LABEL": "Mod Blue",
-            "DEFAULT": 1	
-        }
-    ]
-}*/
+}
