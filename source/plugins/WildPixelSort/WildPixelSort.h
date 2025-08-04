@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <string>
 #include <FFGLSDK.h>
 
@@ -23,5 +24,5 @@ private:
 	GLuint handle;
 	FFGLTextureStruct* texture;
 	bool frozen    = false;
-	UINT32 m_frame = 0;
+    uint32_t m_frame = 0;
 };
