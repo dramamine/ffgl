@@ -391,6 +391,39 @@
 		84959E452E40426A009A1665 /* FFGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E321635F83002B8B05 /* FFGLShader.cpp */; };
 		84959E462E40426A009A1665 /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
 		84959E502E4042C8009A1665 /* PixelSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84959E4F2E4042C8009A1665 /* PixelSort.cpp */; };
+		84959E532E404401009A1665 /* FFGLParamFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480612306FD13007257C5 /* FFGLParamFFT.cpp */; };
+		84959E542E404401009A1665 /* FFGLParamOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807E2306FD14007257C5 /* FFGLParamOption.cpp */; };
+		84959E552E404401009A1665 /* FFGLUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D421635F82002B8B05 /* FFGLUtilities.cpp */; };
+		84959E562E404401009A1665 /* FFGLPluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B421635F6D002B8B05 /* FFGLPluginManager.cpp */; };
+		84959E572E404401009A1665 /* FFGLScopedBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708DC21635F82002B8B05 /* FFGLScopedBufferBinding.cpp */; };
+		84959E592E404401009A1665 /* FFGLScopedShaderBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E221635F83002B8B05 /* FFGLScopedShaderBinding.cpp */; };
+		84959E5A2E404401009A1665 /* FFGLPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480702306FD13007257C5 /* FFGLPlugin.cpp */; };
+		84959E5B2E404401009A1665 /* FFGLPluginInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B621635F6D002B8B05 /* FFGLPluginInfo.cpp */; };
+		84959E5C2E404401009A1665 /* FFGLPluginInfoData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B721635F6D002B8B05 /* FFGLPluginInfoData.cpp */; };
+		84959E5D2E404401009A1665 /* FFGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708B321635F6D002B8B05 /* FFGL.cpp */; };
+		84959E5E2E404401009A1665 /* FFGLParamEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524807C2306FD14007257C5 /* FFGLParamEvent.cpp */; };
+		84959E5F2E404401009A1665 /* FFGLScopedRenderBufferBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD7231D65DA00CDDFA7 /* FFGLScopedRenderBufferBinding.cpp */; };
+		84959E602E404401009A1665 /* FFGLRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480662306FD13007257C5 /* FFGLRandom.cpp */; };
+		84959E612E404401009A1665 /* FFGLScreenQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D521635F82002B8B05 /* FFGLScreenQuad.cpp */; };
+		84959E622E404401009A1665 /* FFGLSmoothValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480672306FD13007257C5 /* FFGLSmoothValue.cpp */; };
+		84959E632E404401009A1665 /* FFGLParamRange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806F2306FD13007257C5 /* FFGLParamRange.cpp */; };
+		84959E642E404401009A1665 /* FFGLFBO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708DE21635F82002B8B05 /* FFGLFBO.cpp */; };
+		84959E652E404401009A1665 /* FFGLParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480692306FD13007257C5 /* FFGLParam.cpp */; };
+		84959E662E404401009A1665 /* FFGLThumbnailInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65D4D1BF23193C9200D12558 /* FFGLThumbnailInfo.cpp */; };
+		84959E672E404401009A1665 /* FFGLMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480712306FD13007257C5 /* FFGLMixer.cpp */; };
+		84959E682E404401009A1665 /* FFGLPluginSDK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708BA21635F6E002B8B05 /* FFGLPluginSDK.cpp */; };
+		84959E692E404401009A1665 /* FFGLScopedSamplerActivation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D221635F82002B8B05 /* FFGLScopedSamplerActivation.cpp */; };
+		84959E6A2E404401009A1665 /* FFGLParamText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524806C2306FD13007257C5 /* FFGLParamText.cpp */; };
+		84959E6B2E404401009A1665 /* FFGLAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480792306FD14007257C5 /* FFGLAudio.cpp */; };
+		84959E6C2E404401009A1665 /* FFGLScopedVAOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708DA21635F82002B8B05 /* FFGLScopedVAOBinding.cpp */; };
+		84959E6D2E404401009A1665 /* FFGLScopedFBOBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65BE5BD6231D65DA00CDDFA7 /* FFGLScopedFBOBinding.cpp */; };
+		84959E6E2E404401009A1665 /* FFGLParamBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480762306FD14007257C5 /* FFGLParamBool.cpp */; };
+		84959E6F2E404401009A1665 /* FFGLParamTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480782306FD14007257C5 /* FFGLParamTrigger.cpp */; };
+		84959E702E404401009A1665 /* FFGLScopedTextureBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708D321635F82002B8B05 /* FFGLScopedTextureBinding.cpp */; };
+		84959E712E404401009A1665 /* FFGLEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 652480652306FD13007257C5 /* FFGLEffect.cpp */; };
+		84959E722E404401009A1665 /* FFGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B2708E321635F83002B8B05 /* FFGLShader.cpp */; };
+		84959E732E404401009A1665 /* FFGLSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6524805F2306FD13007257C5 /* FFGLSource.cpp */; };
+		84959E7D2E404456009A1665 /* RadialMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84959E7C2E404456009A1665 /* RadialMask.cpp */; };
 		D69416C91B904EA200D30319 /* AddSubtract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69416A11B90436100D30319 /* AddSubtract.cpp */; };
 		DB4B641D1FF84E910069DA80 /* Add.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB4B63E11FF8453A0069DA80 /* Add.cpp */; };
 /* End PBXBuildFile section */
@@ -550,6 +583,9 @@
 		84959E4C2E40426A009A1665 /* PixelSort.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PixelSort.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		84959E4E2E4042C8009A1665 /* PixelSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PixelSort.h; path = "/Users/brent/Projects/Resolume/ffgl-metal_heart/source/plugins/PixelSort/PixelSort.h"; sourceTree = "<absolute>"; };
 		84959E4F2E4042C8009A1665 /* PixelSort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PixelSort.cpp; path = "/Users/brent/Projects/Resolume/ffgl-metal_heart/source/plugins/PixelSort/PixelSort.cpp"; sourceTree = "<absolute>"; };
+		84959E792E404401009A1665 /* RadialMask.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RadialMask.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		84959E7B2E404456009A1665 /* RadialMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RadialMask.h; path = "/Users/brent/Projects/Resolume/ffgl-metal_heart/source/plugins/RadialMask/RadialMask.h"; sourceTree = "<absolute>"; };
+		84959E7C2E404456009A1665 /* RadialMask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RadialMask.cpp; path = "/Users/brent/Projects/Resolume/ffgl-metal_heart/source/plugins/RadialMask/RadialMask.cpp"; sourceTree = "<absolute>"; };
 		A9F28D5818B37D0C007D7C87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9F28D5A18B37D12007D7C87 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A9F92EA9201A1C1500527E48 /* Particles.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Particles.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -622,6 +658,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		84959E482E40426A009A1665 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84959E752E404401009A1665 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -736,6 +779,7 @@
 				84959DC82E403E80009A1665 /* FilmTiler.bundle */,
 				84959E1F2E404124009A1665 /* HexagonMosaic.bundle */,
 				84959E4C2E40426A009A1665 /* PixelSort.bundle */,
+				84959E792E404401009A1665 /* RadialMask.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -935,6 +979,8 @@
 				84959E222E4041A3009A1665 /* HexagonMosaic.cpp */,
 				84959E4E2E4042C8009A1665 /* PixelSort.h */,
 				84959E4F2E4042C8009A1665 /* PixelSort.cpp */,
+				84959E7B2E404456009A1665 /* RadialMask.h */,
+				84959E7C2E404456009A1665 /* RadialMask.cpp */,
 			);
 			name = "effect plugins";
 			sourceTree = "<group>";
@@ -1096,6 +1142,23 @@
 			productReference = 84959E4C2E40426A009A1665 /* PixelSort.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
+		84959E512E404401009A1665 /* RadialMask */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84959E762E404401009A1665 /* Build configuration list for PBXNativeTarget "RadialMask" */;
+			buildPhases = (
+				84959E522E404401009A1665 /* Sources */,
+				84959E742E404401009A1665 /* Resources */,
+				84959E752E404401009A1665 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RadialMask;
+			productName = FFGLBrightness;
+			productReference = 84959E792E404401009A1665 /* RadialMask.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 		A9F92E9A201A1C1500527E48 /* Particles */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9F92EA6201A1C1500527E48 /* Build configuration list for PBXNativeTarget "Particles" */;
@@ -1183,6 +1246,7 @@
 				84959DA02E403E80009A1665 /* FilmTiler */,
 				84959DF72E404124009A1665 /* HexagonMosaic */,
 				84959E242E40426A009A1665 /* PixelSort */,
+				84959E512E404401009A1665 /* RadialMask */,
 			);
 		};
 /* End PBXProject section */
@@ -1238,6 +1302,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		84959E472E40426A009A1665 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84959E742E404401009A1665 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1586,6 +1657,46 @@
 				84959E442E40426A009A1665 /* FFGLEffect.cpp in Sources */,
 				84959E452E40426A009A1665 /* FFGLShader.cpp in Sources */,
 				84959E462E40426A009A1665 /* FFGLSource.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84959E522E404401009A1665 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84959E532E404401009A1665 /* FFGLParamFFT.cpp in Sources */,
+				84959E542E404401009A1665 /* FFGLParamOption.cpp in Sources */,
+				84959E7D2E404456009A1665 /* RadialMask.cpp in Sources */,
+				84959E552E404401009A1665 /* FFGLUtilities.cpp in Sources */,
+				84959E562E404401009A1665 /* FFGLPluginManager.cpp in Sources */,
+				84959E572E404401009A1665 /* FFGLScopedBufferBinding.cpp in Sources */,
+				84959E592E404401009A1665 /* FFGLScopedShaderBinding.cpp in Sources */,
+				84959E5A2E404401009A1665 /* FFGLPlugin.cpp in Sources */,
+				84959E5B2E404401009A1665 /* FFGLPluginInfo.cpp in Sources */,
+				84959E5C2E404401009A1665 /* FFGLPluginInfoData.cpp in Sources */,
+				84959E5D2E404401009A1665 /* FFGL.cpp in Sources */,
+				84959E5E2E404401009A1665 /* FFGLParamEvent.cpp in Sources */,
+				84959E5F2E404401009A1665 /* FFGLScopedRenderBufferBinding.cpp in Sources */,
+				84959E602E404401009A1665 /* FFGLRandom.cpp in Sources */,
+				84959E612E404401009A1665 /* FFGLScreenQuad.cpp in Sources */,
+				84959E622E404401009A1665 /* FFGLSmoothValue.cpp in Sources */,
+				84959E632E404401009A1665 /* FFGLParamRange.cpp in Sources */,
+				84959E642E404401009A1665 /* FFGLFBO.cpp in Sources */,
+				84959E652E404401009A1665 /* FFGLParam.cpp in Sources */,
+				84959E662E404401009A1665 /* FFGLThumbnailInfo.cpp in Sources */,
+				84959E672E404401009A1665 /* FFGLMixer.cpp in Sources */,
+				84959E682E404401009A1665 /* FFGLPluginSDK.cpp in Sources */,
+				84959E692E404401009A1665 /* FFGLScopedSamplerActivation.cpp in Sources */,
+				84959E6A2E404401009A1665 /* FFGLParamText.cpp in Sources */,
+				84959E6B2E404401009A1665 /* FFGLAudio.cpp in Sources */,
+				84959E6C2E404401009A1665 /* FFGLScopedVAOBinding.cpp in Sources */,
+				84959E6D2E404401009A1665 /* FFGLScopedFBOBinding.cpp in Sources */,
+				84959E6E2E404401009A1665 /* FFGLParamBool.cpp in Sources */,
+				84959E6F2E404401009A1665 /* FFGLParamTrigger.cpp in Sources */,
+				84959E702E404401009A1665 /* FFGLScopedTextureBinding.cpp in Sources */,
+				84959E712E404401009A1665 /* FFGLEffect.cpp in Sources */,
+				84959E722E404401009A1665 /* FFGLShader.cpp in Sources */,
+				84959E732E404401009A1665 /* FFGLSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2147,6 +2258,44 @@
 			};
 			name = Release;
 		};
+		84959E772E404401009A1665 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		84959E782E404401009A1665 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "FFGLPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		A9F92EA7201A1C1500527E48 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2369,6 +2518,15 @@
 			buildConfigurations = (
 				84959E4A2E40426A009A1665 /* Debug */,
 				84959E4B2E40426A009A1665 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84959E762E404401009A1665 /* Build configuration list for PBXNativeTarget "RadialMask" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84959E772E404401009A1665 /* Debug */,
+				84959E782E404401009A1665 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
