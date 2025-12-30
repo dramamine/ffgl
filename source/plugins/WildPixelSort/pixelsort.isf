@@ -1,6 +1,6 @@
 /*{
-  "DESCRIPTION": "Wild Pixel Sort",
-  "CREDIT": "Your Name",
+  "DESCRIPTION": "Pixelsort XTC",
+  "CREDIT": "domegod",
   "ISFVSN": "2",
   "CATEGORIES": ["Glitch", "Stylize"],
   "INPUTS": [
@@ -10,6 +10,10 @@
     },
     {
       "NAME": "feedbackImage",
+      "TYPE": "image"
+    },
+    {
+      "NAME": "noiseImage",
       "TYPE": "image"
     },
     {
@@ -25,6 +29,13 @@
       "MIN": 0.0,
       "MAX": 10.0,
       "DEFAULT": 1.0
+    },
+    {
+      "NAME": "Freshness",
+      "TYPE": "float",
+      "MIN": 0.0,
+      "MAX": 1.0,
+      "DEFAULT": 0.5
     },
     {
       "NAME": "On",
@@ -52,6 +63,23 @@
 
 // grayscale average of the colors
 float gscale (vec3 c) { return (c.r+c.g+c.b)/3.; }
+
+// Check if adjacent pixels are sorted
+bool isSorted(vec2 st, vec2 dir, bool reverse) {
+  vec4 left = IMG_NORM_PIXEL(feedbackImage, st - dir);
+  vec4 right = IMG_NORM_PIXEL(feedbackImage, st + dir);
+  float gLeft = gscale(left.rgb);
+  float gRight = gscale(right.rgb);
+
+  // Skip check if either pixel is transparent
+  if (left.a < 0.01 || right.a < 0.01) return false;
+
+  if (reverse) {
+    return gLeft >= gRight; // Sorted if left is brighter
+  } else {
+    return gLeft <= gRight; // Sorted if left is darker
+  }
+}
 
 void main()
 {
@@ -113,7 +141,14 @@ void main()
         return;
       }
     }
-    gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
+    // Noise-based freshness decision
+    vec4 noise = IMG_NORM_PIXEL(noiseImage, st);
+    float noiseVal = gscale(noise.rgb);
+    if (noiseVal < Freshness) {
+      gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
+    } else {
+      gl_FragColor = IMG_NORM_PIXEL(feedbackImage, st);
+    }
   } else {
 
     // we differentiate every 1/2 pixel on the horizontal axis, will be -1 or 1
@@ -158,7 +193,14 @@ void main()
         return;
       }
     }
-    gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
+    // Noise-based freshness decision
+    vec4 noise = IMG_NORM_PIXEL(noiseImage, st);
+    float noiseVal = gscale(noise.rgb);
+    if (noiseVal < Freshness) {
+      gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
+    } else {
+      gl_FragColor = IMG_NORM_PIXEL(feedbackImage, st);
+    }
   }
 
 }
