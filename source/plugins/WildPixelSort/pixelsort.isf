@@ -9,11 +9,15 @@
       "TYPE": "image"
     },
     {
+      "NAME": "feedbackImage",
+      "TYPE": "image"
+    },
+    {
       "NAME": "Wildness",
       "TYPE": "float",
       "MIN": 0.0,
-      "MAX": 100.0,
-      "DEFAULT": 10.0
+      "MAX": 5.0,
+      "DEFAULT": 0.0
     },
     {
       "NAME": "Threshold",
@@ -23,12 +27,22 @@
       "DEFAULT": 0.5
     },
     {
+      "NAME": "On",
+      "TYPE": "bool",
+      "DEFAULT": true
+    },
+    {
       "NAME": "Vertical",
+      "TYPE": "bool",
+      "DEFAULT": false
+    },
+    {
+      "NAME": "Reverse",
       "TYPE": "bool",
       "DEFAULT": false
     }
   ],
-  "PASSES": [
+    "PASSES": [
     {
       "TARGET": "OldTexture",
       "PERSISTENT": true
@@ -42,28 +56,34 @@ float gscale (vec3 c) { return (c.r+c.g+c.b)/3.; }
 void main()
 {
   vec2 st = isf_FragNormCoord;
-  vec4 color = IMG_NORM_PIXEL(OldTexture, st);
 
-  gl_FragColor = color;
-  if (Wildness < 1.) {
+  if (!On || Wildness < 1.) {
     gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
+    return;
   }
 
   // the frame number parity, -1 is odd 1 is even
   float fParity = mod(float(FRAMEINDEX), 2.) * 2. - 1.;
 
   if (Vertical) {
-    // we differentiate every 1/2 pixel on the horizontal axis, will be -1 or 1
+    // we differentiate every 1/2 pixel on the vertical axis, will be -1 or 1
     float vp = mod(floor(isf_FragNormCoord.y * RENDERSIZE.y), 2.0) * 2. - 1.;
 
     vec2 dir = vec2(0, 1);
+    if (Reverse) dir *= -1.0;
     dir*= fParity * vp;
     dir/= RENDERSIZE.xy;
 
     // we sort
-    vec4 curr = IMG_NORM_PIXEL(inputImage, st);
+    vec4 curr = IMG_NORM_PIXEL(feedbackImage, st);
 
     float gCurr = gscale(curr.rgb);
+
+    // skip transparent pixels
+    if (curr.a < 0.01) {
+      gl_FragColor = curr;
+      return;
+    }
 
     // we prevent the sort from happening on the borders
     if (st.y + dir.y < 0.0 || st.y + dir.y > 1.0) {
@@ -74,16 +94,20 @@ void main()
     vec4 comp;
     float gComp;
 
-    for (int i = int(floor(Wildness)); i > 0; i--) {
-      comp = IMG_NORM_PIXEL(inputImage, st + i * dir);
+    int loopStart = Reverse ? 1 : int(floor(Wildness));
+    int loopEnd = Reverse ? int(floor(Wildness)) : 0;
+    int loopStep = Reverse ? 1 : -1;
+
+    for (int i = loopStart; Reverse ? (i <= loopEnd) : (i > loopEnd); i += loopStep) {
+      comp = IMG_NORM_PIXEL(feedbackImage, st + i * dir);
       gComp = gscale(comp.rgb);
       if (dir.y < 0.0) {
-        if (gCurr > Threshold && gComp > gCurr) { // (gCurr > Threshold &&
+        if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
           gl_FragColor = comp;
           return;
         }
       } else {
-        if (gComp > Threshold && gCurr >= gComp) {
+        if (gComp > Threshold && comp.a > 0.01 && (Reverse ? gCurr <= gComp : gCurr >= gComp)) {
           gl_FragColor = comp;
           return;
         }
@@ -96,13 +120,19 @@ void main()
     float vp = mod(floor(isf_FragNormCoord.x * RENDERSIZE.x), 2.0) * 2. - 1.;
 
     vec2 dir = vec2(1, 0);
+    if (Reverse) dir *= -1.0;
     dir*= fParity * vp;
     dir/= RENDERSIZE.xy;
 
     // we sort
-    vec4 curr = IMG_NORM_PIXEL(inputImage, st);
-
+    vec4 curr = IMG_NORM_PIXEL(feedbackImage, st);
     float gCurr = gscale(curr.rgb);
+
+    // skip transparent pixels
+    if (curr.a < 0.01) {
+      gl_FragColor = curr;
+      return;
+    }
 
     // we prevent the sort from happening on the borders
     if (st.x + dir.x < 0.0 || st.x + dir.x > 1.0) {
@@ -113,17 +143,21 @@ void main()
     vec4 comp;
     float gComp;
 
-    for (int i = int(floor(Wildness)); i > 0; i--) {
-      comp = IMG_NORM_PIXEL(inputImage, st + i * dir);
+    int loopStart = Reverse ? 1 : int(floor(Wildness));
+    int loopEnd = Reverse ? int(floor(Wildness)) : 0;
+    int loopStep = Reverse ? 1 : -1;
+
+    for (int i = loopStart; Reverse ? (i <= loopEnd) : (i > loopEnd); i += loopStep) {
+      comp = IMG_NORM_PIXEL(feedbackImage, st + i * dir);
       gComp = gscale(comp.rgb);
 
       if (dir.x < 0.0) {
-        if (gCurr > Threshold && gComp > gCurr) {
+        if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
           gl_FragColor = comp;
           return;
         }
       } else {
-        if (gComp > Threshold && gCurr >= gComp) {
+        if (gComp > Threshold && comp.a > 0.01 && (Reverse ? gCurr <= gComp : gCurr >= gComp)) {
           gl_FragColor = comp;
           return;
         }
