@@ -61,6 +61,11 @@ void main()
     gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
     return;
   }
+  int d = int(Distance);
+  if (d == 0) {
+    gl_FragColor = IMG_NORM_PIXEL(feedbackImage, st);
+    return;
+  }
 
   // the frame number parity, -1 is odd 1 is even
   float fParity = mod(float(FRAMEINDEX), 2.) * 2. - 1.;
@@ -94,8 +99,8 @@ void main()
     vec4 comp;
     float gComp;
 
-    // Check pixel at Distance away
-    comp = IMG_NORM_PIXEL(feedbackImage, st + floor(Distance*2-1) * dir);
+    // Check pixel at d away
+    comp = IMG_NORM_PIXEL(feedbackImage, st + (d * 2 - 1) * dir);
     gComp = gscale(comp.rgb);
     if (dir.y < 0.0) {
       if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
@@ -108,7 +113,7 @@ void main()
         return;
       }
     }
-    gl_FragColor = curr;
+    gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
   } else {
 
     // we differentiate every 1/2 pixel on the horizontal axis, will be -1 or 1
@@ -138,8 +143,8 @@ void main()
     vec4 comp;
     float gComp;
 
-    // Check pixel at Distance away
-    comp = IMG_NORM_PIXEL(feedbackImage, st + floor(Distance*2-1) * dir);
+    // Check pixel at d away
+    comp = IMG_NORM_PIXEL(feedbackImage, st + (d * 2 - 1) * dir);
     gComp = gscale(comp.rgb);
 
     if (dir.x < 0.0) {
@@ -153,7 +158,7 @@ void main()
         return;
       }
     }
-    gl_FragColor = curr;
+    gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
   }
 
 }
