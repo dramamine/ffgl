@@ -13,18 +13,18 @@
       "TYPE": "image"
     },
     {
-      "NAME": "Wildness",
-      "TYPE": "float",
-      "MIN": 0.0,
-      "MAX": 5.0,
-      "DEFAULT": 0.0
-    },
-    {
       "NAME": "Threshold",
       "TYPE": "float",
       "MIN": 0.0,
       "MAX": 1.0,
       "DEFAULT": 0.5
+    },
+    {
+      "NAME": "Distance",
+      "TYPE": "float",
+      "MIN": 0.0,
+      "MAX": 10.0,
+      "DEFAULT": 1.0
     },
     {
       "NAME": "On",
@@ -57,7 +57,7 @@ void main()
 {
   vec2 st = isf_FragNormCoord;
 
-  if (!On || Wildness < 1.) {
+  if (!On) {
     gl_FragColor = IMG_NORM_PIXEL(inputImage, st);
     return;
   }
@@ -94,23 +94,18 @@ void main()
     vec4 comp;
     float gComp;
 
-    int loopStart = Reverse ? 1 : int(floor(Wildness));
-    int loopEnd = Reverse ? int(floor(Wildness)) : 0;
-    int loopStep = Reverse ? 1 : -1;
-
-    for (int i = loopStart; Reverse ? (i <= loopEnd) : (i > loopEnd); i += loopStep) {
-      comp = IMG_NORM_PIXEL(feedbackImage, st + i * dir);
-      gComp = gscale(comp.rgb);
-      if (dir.y < 0.0) {
-        if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
-          gl_FragColor = comp;
-          return;
-        }
-      } else {
-        if (gComp > Threshold && comp.a > 0.01 && (Reverse ? gCurr <= gComp : gCurr >= gComp)) {
-          gl_FragColor = comp;
-          return;
-        }
+    // Check pixel at Distance away
+    comp = IMG_NORM_PIXEL(feedbackImage, st + floor(Distance*2-1) * dir);
+    gComp = gscale(comp.rgb);
+    if (dir.y < 0.0) {
+      if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
+        gl_FragColor = comp;
+        return;
+      }
+    } else {
+      if (gComp > Threshold && comp.a > 0.01 && (Reverse ? gCurr <= gComp : gCurr >= gComp)) {
+        gl_FragColor = comp;
+        return;
       }
     }
     gl_FragColor = curr;
@@ -143,24 +138,19 @@ void main()
     vec4 comp;
     float gComp;
 
-    int loopStart = Reverse ? 1 : int(floor(Wildness));
-    int loopEnd = Reverse ? int(floor(Wildness)) : 0;
-    int loopStep = Reverse ? 1 : -1;
+    // Check pixel at Distance away
+    comp = IMG_NORM_PIXEL(feedbackImage, st + floor(Distance*2-1) * dir);
+    gComp = gscale(comp.rgb);
 
-    for (int i = loopStart; Reverse ? (i <= loopEnd) : (i > loopEnd); i += loopStep) {
-      comp = IMG_NORM_PIXEL(feedbackImage, st + i * dir);
-      gComp = gscale(comp.rgb);
-
-      if (dir.x < 0.0) {
-        if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
-          gl_FragColor = comp;
-          return;
-        }
-      } else {
-        if (gComp > Threshold && comp.a > 0.01 && (Reverse ? gCurr <= gComp : gCurr >= gComp)) {
-          gl_FragColor = comp;
-          return;
-        }
+    if (dir.x < 0.0) {
+      if (gCurr > Threshold && comp.a > 0.01 && (Reverse ? gComp < gCurr : gComp > gCurr)) {
+        gl_FragColor = comp;
+        return;
+      }
+    } else {
+      if (gComp > Threshold && comp.a > 0.01 && (Reverse ? gCurr <= gComp : gCurr >= gComp)) {
+        gl_FragColor = comp;
+        return;
       }
     }
     gl_FragColor = curr;
